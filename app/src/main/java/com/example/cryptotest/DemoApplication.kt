@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.data.coin.di.coinDataBaseModule
 import com.example.data.coin.di.dataSourceModule
 import com.example.data.coin.di.repositoryModule
+import com.example.domain.di.currencyUseCaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -20,7 +21,8 @@ class DemoApplication: Application() {
             modules(
                 coinDataBaseModule,
                 dataSourceModule,
-                repositoryModule
+                repositoryModule,
+                currencyUseCaseModule
             )
         }
     }
