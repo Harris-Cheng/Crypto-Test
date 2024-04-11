@@ -1,5 +1,5 @@
 package com.example.domain.usecase
 
 interface IInsertCurrencyListUseCase {
-    suspend fun execute()
+    suspend fun execute(): Result<Unit>
 }

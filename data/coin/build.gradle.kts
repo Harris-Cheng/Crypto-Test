@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -54,4 +55,6 @@ dependencies {
     testApi("io.insert-koin:koin-test:$koinVersion")
     // Koin for JUnit 4
     testApi("io.insert-koin:koin-test-junit4:$koinVersion")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
