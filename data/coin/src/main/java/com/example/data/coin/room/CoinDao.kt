@@ -1,6 +1,7 @@
 package com.example.data.coin.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,5 +14,8 @@ interface CoinDao {
     fun getAll(): Flow<List<Coin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(peoples: List<Coin>)
+    suspend fun insertAll(peoples: List<Coin>)
+
+    @Query("DELETE FROM coin")
+    suspend fun deleteAll()
 }
