@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CryptoTest"
 include(":app")
- 
+include(":data:coin")
