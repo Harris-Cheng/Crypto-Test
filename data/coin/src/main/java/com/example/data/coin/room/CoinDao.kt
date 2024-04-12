@@ -14,7 +14,7 @@ interface CoinDao {
     fun getAll(): Flow<List<Coin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(peoples: List<Coin>)
+    suspend fun insertAll(coin: List<Coin>)
 
     @Query("DELETE FROM coin")
     suspend fun deleteAll()
