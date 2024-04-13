@@ -11,6 +11,7 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.example.common.utils.observe
 import com.example.feature.currencylist.adapter.CurrencyListAdapter
@@ -47,8 +48,9 @@ class CurrencyListFragment: Fragment() {
 
         binding.rvList.adapter = adapter
 
-        setupOnClick()
         startObserve()
+        setupOnClick()
+        setupSearch()
     }
 
     private fun setupOnClick() {
@@ -69,6 +71,14 @@ class CurrencyListFragment: Fragment() {
         }
     }
 
+    private fun setupSearch() {
+        with(binding.edtSearch) {
+            doOnTextChanged { text, _, _, _ ->
+                viewModel.searchTerm(text.toString())
+            }
+        }
+    }
+
     private fun startObserve() {
         viewModel.displayList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
@@ -78,6 +88,11 @@ class CurrencyListFragment: Fragment() {
     private fun handleInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rvList) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            binding.root.updatePadding(
+                top = insets.top
+            )
+
             binding.buttonContainer.updateLayoutParams<MarginLayoutParams> {
                 updateMargins(
                     bottom = insets.bottom
@@ -85,7 +100,6 @@ class CurrencyListFragment: Fragment() {
             }
             binding.buttonContainer.doOnLayout {
                 v.updatePadding(
-                    top = insets.top,
                     bottom = insets.bottom + it.height
                 )
             }

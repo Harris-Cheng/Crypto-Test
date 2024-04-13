@@ -2,10 +2,12 @@ package com.example.feature.currencylist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.common.utils.throttleLatest
 import com.example.domain.usecase.IDeleteCurrencyListUseCase
 import com.example.domain.usecase.IFilterCurrencyTypeUseCase
 import com.example.domain.usecase.IGetCurrencyListUseCase
 import com.example.domain.usecase.IInsertCurrencyListUseCase
+import com.example.domain.usecase.ISearchCurrencyUseCase
 import com.example.domain.usecase.ListType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,17 +23,28 @@ class CurrencyListViewModel(
     private val insertCurrencyListUseCase: IInsertCurrencyListUseCase,
     private val deleteCurrencyUseCase: IDeleteCurrencyListUseCase,
     private val filterCurrencyListUseCase: IFilterCurrencyTypeUseCase,
+    private val searchCurrencyListUseCase: ISearchCurrencyUseCase
 ): ViewModel() {
 
     private val listTypeFlow = MutableStateFlow<ListType>(ListType.All)
 
     private val originalListFlow = getCurrencyListUseCase.execute().flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    private val searchTermFlow = MutableStateFlow("")
+
     val displayList = originalListFlow.combine(
         listTypeFlow
     ) { list, type ->
         filterCurrencyListUseCase.execute(list, type)
-    }.flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    }.combine(searchTermFlow.throttleLatest(500)) { filteredList, keyword ->
+        if (keyword.isBlank()) {
+            filteredList
+        } else {
+            searchCurrencyListUseCase.execute(
+                filteredList, keyword
+            )
+        }
+    }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun onClearAllClick() {
         deleteAllList()
@@ -53,6 +66,10 @@ class CurrencyListViewModel(
         filterListByType(ListType.All)
     }
 
+    fun searchTerm(keyword: String) {
+        updateSearchKeyword(keyword)
+    }
+
     private fun deleteAllList() {
         viewModelScope.launch(Dispatchers.IO) {
             deleteCurrencyUseCase.execute()
@@ -69,5 +86,9 @@ class CurrencyListViewModel(
         listTypeFlow.update {
             type
         }
+    }
+
+    private fun updateSearchKeyword(keyword: String) {
+        searchTermFlow.value = keyword
     }
 }

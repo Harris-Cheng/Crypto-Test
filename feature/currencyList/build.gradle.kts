@@ -51,4 +51,6 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koinVersion")
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 }
