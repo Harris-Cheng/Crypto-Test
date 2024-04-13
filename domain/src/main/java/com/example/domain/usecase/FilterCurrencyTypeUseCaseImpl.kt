@@ -13,8 +13,8 @@ internal class FilterCurrencyTypeUseCaseImpl: IFilterCurrencyTypeUseCase {
     private fun List<CurrencyModel>.filterCurrencyType(type: ListType): List<CurrencyModel> {
         return when (type) {
             ListType.All -> this
-            ListType.ListA -> filterIsInstance<CurrencyModel.Coin>()
-            ListType.ListB -> filterIsInstance<CurrencyModel.Fiat>()
+            ListType.Coin -> filterIsInstance<CurrencyModel.Coin>()
+            ListType.Fiat -> filterIsInstance<CurrencyModel.Fiat>()
         }
     }
 }

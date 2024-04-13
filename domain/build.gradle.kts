@@ -44,4 +44,15 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    // mockk
+    val mockkVersion = "1.13.10"
+    testImplementation("io.mockk:mockk:$mockkVersion")
+
+    // Turbine
+    val turbineVersion = "1.1.0"
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
 }

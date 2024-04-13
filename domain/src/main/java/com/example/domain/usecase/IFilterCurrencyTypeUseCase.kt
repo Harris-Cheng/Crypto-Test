@@ -3,9 +3,9 @@ package com.example.domain.usecase
 import com.example.domain.model.CurrencyModel
 
 sealed interface ListType {
-    data object ListA: ListType
+    data object Coin: ListType
 
-    data object ListB: ListType
+    data object Fiat: ListType
 
     data object All: ListType
 }
