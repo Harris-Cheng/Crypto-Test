@@ -17,3 +17,5 @@ rootProject.name = "CryptoTest"
 include(":app")
 include(":data:coin")
 include(":domain")
+include(":feature:currencyList")
+include(":common")

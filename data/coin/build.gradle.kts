@@ -71,10 +71,6 @@ dependencies {
     // koin
     val koinVersion = "3.5.0"
     api("io.insert-koin:koin-android:$koinVersion")
-    // Koin Test features
-    testApi("io.insert-koin:koin-test:$koinVersion")
-    // Koin for JUnit 4
-    testApi("io.insert-koin:koin-test-junit4:$koinVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
