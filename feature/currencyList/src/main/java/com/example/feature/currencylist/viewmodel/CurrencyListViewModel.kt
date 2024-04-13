@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,6 +46,10 @@ class CurrencyListViewModel(
             )
         }
     }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val isEmptyList = displayList.map {
+        it.isEmpty()
+    }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     fun onClearAllClick() {
         deleteAllList()

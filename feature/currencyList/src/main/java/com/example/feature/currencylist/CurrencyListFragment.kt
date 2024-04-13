@@ -8,6 +8,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
@@ -82,6 +83,10 @@ class CurrencyListFragment: Fragment() {
     private fun startObserve() {
         viewModel.displayList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+
+        viewModel.isEmptyList.observe(viewLifecycleOwner) {
+            binding.emptyLayout.root.isVisible = it
         }
     }
 

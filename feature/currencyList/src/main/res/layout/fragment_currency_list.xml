@@ -41,6 +41,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_currency_view"/>
+
+    <include android:id="@+id/empty_layout"
+        layout="@layout/item_empty_view"
+        android:visibility="gone"/>
     
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/button_container"
