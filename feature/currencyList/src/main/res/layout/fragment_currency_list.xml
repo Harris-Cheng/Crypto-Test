@@ -16,5 +16,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_currency_view"/>
+    
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:flow_maxElementsWrap="3"
+        app:flow_wrapMode="aligned"
+        app:flow_horizontalGap="10dp"
+        app:flow_verticalGap="10dp"
+        app:constraint_referenced_ids="main_button,button_1,button_2,button_3,button_4"/>
+
+    <TextView
+        android:id="@+id/main_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="#E3E0E0"
+        android:text="CLEAR ALL"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"/>
+
+    <TextView
+        android:id="@+id/button_1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="#E3E0E0"
+        android:text="INSERT ALL"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"/>
+
+    <TextView
+        android:id="@+id/button_2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="#E3E0E0"
+        android:text="SHOW LIST A"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"/>
+
+    <TextView
+        android:id="@+id/button_3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="#E3E0E0"
+        android:text="SHOW LIST B"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"/>
+
+    <TextView
+        android:id="@+id/button_4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="#E3E0E0"
+        android:text="SHOW ALL"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

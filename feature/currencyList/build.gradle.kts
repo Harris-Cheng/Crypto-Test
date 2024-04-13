@@ -49,4 +49,6 @@ dependencies {
     // koin
     val koinVersion = "3.5.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
+
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }

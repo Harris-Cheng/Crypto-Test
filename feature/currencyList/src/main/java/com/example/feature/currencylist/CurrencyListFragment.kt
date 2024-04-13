@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.example.common.utils.observe
@@ -43,11 +47,30 @@ class CurrencyListFragment: Fragment() {
 
         binding.rvList.adapter = adapter
 
+        setupOnClick()
         startObserve()
     }
 
+    private fun setupOnClick() {
+        binding.mainButton.setOnClickListener {
+            viewModel.onClearAllClick()
+        }
+        binding.button1.setOnClickListener {
+            viewModel.onInsertAllClick()
+        }
+        binding.button2.setOnClickListener {
+            viewModel.onShowListAClick()
+        }
+        binding.button3.setOnClickListener {
+            viewModel.onShowListBClick()
+        }
+        binding.button4.setOnClickListener {
+            viewModel.onShowAllClick()
+        }
+    }
+
     private fun startObserve() {
-        viewModel.originalListFlow.observe(viewLifecycleOwner) {
+        viewModel.displayList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
@@ -55,10 +78,17 @@ class CurrencyListFragment: Fragment() {
     private fun handleInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rvList) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(
-                top = insets.top,
-                bottom = insets.bottom
-            )
+            binding.buttonContainer.updateLayoutParams<MarginLayoutParams> {
+                updateMargins(
+                    bottom = insets.bottom
+                )
+            }
+            binding.buttonContainer.doOnLayout {
+                v.updatePadding(
+                    top = insets.top,
+                    bottom = insets.bottom + it.height
+                )
+            }
 
             windowInsets
         }
