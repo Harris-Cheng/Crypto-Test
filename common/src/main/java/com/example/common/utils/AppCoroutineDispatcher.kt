@@ -6,11 +6,17 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val coroutineModule = module {
-    factoryOf(::AppCoroutineDispatcher)
+    factory {
+        AppCoroutineDispatcher(
+            Dispatchers.Main,
+            Dispatchers.IO,
+            Dispatchers.Default
+        )
+    }
 }
 
 class AppCoroutineDispatcher(
-    val main: CoroutineDispatcher = Dispatchers.Main,
-    val io: CoroutineDispatcher = Dispatchers.IO,
-    val default: CoroutineDispatcher = Dispatchers.Default
+    val main: CoroutineDispatcher,
+    val io: CoroutineDispatcher,
+    val default: CoroutineDispatcher,
 )
