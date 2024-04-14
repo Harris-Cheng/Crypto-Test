@@ -1,6 +1,7 @@
 package com.example.cryptotest
 
 import android.app.Application
+import com.example.common.utils.coroutineModule
 import com.example.data.coin.di.coinDataBaseModule
 import com.example.data.coin.di.dataSourceModule
 import com.example.data.coin.di.repositoryModule
@@ -20,6 +21,7 @@ class DemoApplication: Application() {
         startKoin {
             androidContext(this@DemoApplication)
             modules(
+                coroutineModule,
                 coinDataBaseModule,
                 dataSourceModule,
                 repositoryModule,

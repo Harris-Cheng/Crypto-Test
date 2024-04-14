@@ -2,6 +2,7 @@ package com.example.feature.currencylist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.common.utils.AppCoroutineDispatcher
 import com.example.common.utils.throttleLatest
 import com.example.domain.usecase.IDeleteCurrencyListUseCase
 import com.example.domain.usecase.IFilterCurrencyTypeUseCase
@@ -9,7 +10,6 @@ import com.example.domain.usecase.IGetCurrencyListUseCase
 import com.example.domain.usecase.IInsertCurrencyListUseCase
 import com.example.domain.usecase.ISearchCurrencyUseCase
 import com.example.domain.usecase.ListType
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CurrencyListViewModel(
+    private val appCoroutineDispatcher: AppCoroutineDispatcher,
     getCurrencyListUseCase: IGetCurrencyListUseCase,
     private val insertCurrencyListUseCase: IInsertCurrencyListUseCase,
     private val deleteCurrencyUseCase: IDeleteCurrencyListUseCase,
@@ -29,7 +30,7 @@ class CurrencyListViewModel(
 
     private val listTypeFlow = MutableStateFlow<ListType>(ListType.All)
 
-    private val originalListFlow = getCurrencyListUseCase.execute().flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private val originalListFlow = getCurrencyListUseCase.execute().flowOn(appCoroutineDispatcher.io).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val searchTermFlow = MutableStateFlow("")
 
@@ -37,7 +38,7 @@ class CurrencyListViewModel(
         listTypeFlow
     ) { list, type ->
         filterCurrencyListUseCase.execute(list, type)
-    }.combine(searchTermFlow.throttleLatest(500)) { filteredList, keyword ->
+    }.combine(searchTermFlow) { filteredList, keyword ->
         if (keyword.isBlank()) {
             filteredList
         } else {
@@ -45,7 +46,7 @@ class CurrencyListViewModel(
                 filteredList, keyword
             )
         }
-    }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    }.flowOn(appCoroutineDispatcher.io).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val isEmptyList = displayList.map {
         it.isEmpty()
@@ -76,13 +77,13 @@ class CurrencyListViewModel(
     }
 
     private fun deleteAllList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatcher.io) {
             deleteCurrencyUseCase.execute()
         }
     }
 
     private fun insertAllList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatcher.io) {
             insertCurrencyListUseCase.execute()
         }
     }

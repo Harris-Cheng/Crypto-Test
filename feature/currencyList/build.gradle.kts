@@ -53,4 +53,17 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    // mockk
+    val mockkVersion = "1.13.10"
+    testImplementation("io.mockk:mockk:$mockkVersion")
+
+    // Turbine
+    val turbineVersion = "1.1.0"
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
+
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }

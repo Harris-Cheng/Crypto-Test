@@ -41,4 +41,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     api("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
+    // koin
+    val koinVersion = "3.5.0"
+    api("io.insert-koin:koin-android:$koinVersion")
 }
